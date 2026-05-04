@@ -18,15 +18,49 @@ const dashboard_service_1 = require("../modules/dashboard/dashboard.service");
 const egresados_service_1 = require("../modules/egresados/egresados.service");
 const ofertas_service_1 = require("../modules/ofertas/ofertas.service");
 const reportes_service_1 = require("../modules/reportes/reportes.service");
+const notifications_gateway_1 = require("./notifications.gateway");
 let TrpcRouter = class TrpcRouter {
-    constructor(trpc, authService, dashboardService, egresadosService, ofertasService, reportesService) {
+    constructor(trpc, authService, dashboardService, egresadosService, ofertasService, reportesService, notificationsGateway) {
         this.trpc = trpc;
         this.authService = authService;
         this.dashboardService = dashboardService;
         this.egresadosService = egresadosService;
         this.ofertasService = ofertasService;
         this.reportesService = reportesService;
+        this.notificationsGateway = notificationsGateway;
         this.appRouter = this.trpc.router({
+            chatWithNexusBot: this.trpc.protectedProcedure
+                .input(zod_1.z.object({
+                message: zod_1.z.string(),
+                context: zod_1.z.enum(['ADMIN', 'EGRESADO', 'EMPRESA']),
+                includeAnalysis: zod_1.z.boolean().optional()
+            }))
+                .mutation(async ({ input, ctx }) => {
+                let response = "";
+                let analysis = null;
+                if (input.includeAnalysis) {
+                    const stats = await this.dashboardService.getAdminStats();
+                    analysis = {
+                        summary: `Actualmente hay ${stats.totalEgresados} egresados y ${stats.totalEmpresas} empresas registradas.`,
+                        suggestion: stats.ofertasActivas < 10
+                            ? "Las ofertas están bajas. Sugiero contactar a empresas del sector tecnológico."
+                            : "El mercado está activo. Es un buen momento para generar reportes de empleabilidad."
+                    };
+                    response = `Basado en los datos: ${analysis.summary} ${analysis.suggestion}`;
+                }
+                else {
+                    const msg = input.message.toLowerCase();
+                    if (msg.includes('postulantes'))
+                        response = "Para atraer más postulantes, asegúrate de que las ofertas tengan requisitos claros y rangos salariales competitivos.";
+                    else if (msg.includes('alianzas'))
+                        response = "Las alianzas con empresas del sector TI han crecido un 15% este mes. Te sugiero revisar el reporte de gestión.";
+                    else if (msg.includes('perfil'))
+                        response = "Los egresados con perfiles completos tienen un 40% más de probabilidad de ser contratados.";
+                    else
+                        response = "Hola, soy NexusBot. ¿En qué puedo ayudarte hoy con la gestión de egresados y ofertas?";
+                }
+                return { response, analysis };
+            }),
             login: this.trpc.procedure
                 .input(auth_service_1.LoginSchema)
                 .mutation(async ({ input }) => {
@@ -132,6 +166,7 @@ exports.TrpcRouter = TrpcRouter = __decorate([
         dashboard_service_1.DashboardService,
         egresados_service_1.EgresadosService,
         ofertas_service_1.OfertasService,
-        reportes_service_1.ReportesService])
+        reportes_service_1.ReportesService,
+        notifications_gateway_1.NotificationsGateway])
 ], TrpcRouter);
 //# sourceMappingURL=trpc.router.js.map

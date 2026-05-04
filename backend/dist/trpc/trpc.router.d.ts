@@ -4,6 +4,7 @@ import { DashboardService } from '../modules/dashboard/dashboard.service';
 import { EgresadosService } from '../modules/egresados/egresados.service';
 import { OfertasService } from '../modules/ofertas/ofertas.service';
 import { ReportesService } from '../modules/reportes/reportes.service';
+import { NotificationsGateway } from './notifications.gateway';
 export declare class TrpcRouter {
     private trpc;
     private authService;
@@ -11,13 +12,26 @@ export declare class TrpcRouter {
     private egresadosService;
     private ofertasService;
     private reportesService;
-    constructor(trpc: TrpcService, authService: AuthService, dashboardService: DashboardService, egresadosService: EgresadosService, ofertasService: OfertasService, reportesService: ReportesService);
+    private notificationsGateway;
+    constructor(trpc: TrpcService, authService: AuthService, dashboardService: DashboardService, egresadosService: EgresadosService, ofertasService: OfertasService, reportesService: ReportesService, notificationsGateway: NotificationsGateway);
     appRouter: import("@trpc/server").TRPCBuiltRouter<{
         ctx: import("./trpc.service").TrpcContext;
         meta: object;
         errorShape: import("@trpc/server").TRPCDefaultErrorShape;
         transformer: false;
     }, import("@trpc/server").TRPCDecorateCreateRouterOptions<{
+        chatWithNexusBot: import("@trpc/server").TRPCMutationProcedure<{
+            input: {
+                message?: string;
+                context?: "ADMIN" | "EGRESADO" | "EMPRESA";
+                includeAnalysis?: boolean;
+            };
+            output: {
+                response: string;
+                analysis: any;
+            };
+            meta: object;
+        }>;
         login: import("@trpc/server").TRPCMutationProcedure<{
             input: {
                 email?: string;
@@ -157,10 +171,10 @@ export declare class TrpcRouter {
                 titulo?: string;
                 descripcion?: string;
                 requisitos?: string[];
+                id?: number;
                 salarioMin?: number;
                 salarioMax?: number;
                 modalidad?: "PRESENCIAL" | "REMOTO" | "HIBRIDO";
-                id?: number;
             };
             output: {
                 success: boolean;

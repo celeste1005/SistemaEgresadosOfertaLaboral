@@ -1,4 +1,5 @@
 import { Sidebar } from "@/components/sidebar";
+import { NexusBot } from "@/components/NexusBot";
 
 export default function EmpresaLayout({
   children,
@@ -8,8 +9,9 @@ export default function EmpresaLayout({
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden">
       <Sidebar role="EMPRESA" />
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto relative">
         {children}
+        <NexusBot role="EMPRESA" />
       </main>
     </div>
   );

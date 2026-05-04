@@ -10,6 +10,7 @@ exports.TrpcModule = void 0;
 const common_1 = require("@nestjs/common");
 const trpc_service_1 = require("./trpc.service");
 const trpc_router_1 = require("./trpc.router");
+const notifications_gateway_1 = require("./notifications.gateway");
 const auth_module_1 = require("../modules/auth/auth.module");
 const dashboard_module_1 = require("../modules/dashboard/dashboard.module");
 const egresados_module_1 = require("../modules/egresados/egresados.module");
@@ -21,8 +22,8 @@ exports.TrpcModule = TrpcModule;
 exports.TrpcModule = TrpcModule = __decorate([
     (0, common_1.Module)({
         imports: [auth_module_1.AuthModule, dashboard_module_1.DashboardModule, egresados_module_1.EgresadosModule, ofertas_module_1.OfertasModule, reportes_module_1.ReportesModule],
-        providers: [trpc_service_1.TrpcService, trpc_router_1.TrpcRouter],
-        exports: [trpc_router_1.TrpcRouter],
+        providers: [trpc_service_1.TrpcService, trpc_router_1.TrpcRouter, notifications_gateway_1.NotificationsGateway],
+        exports: [trpc_router_1.TrpcRouter, notifications_gateway_1.NotificationsGateway],
     })
 ], TrpcModule);
 //# sourceMappingURL=trpc.module.js.map
