@@ -157,10 +157,10 @@ export declare class TrpcRouter {
                 titulo?: string;
                 descripcion?: string;
                 requisitos?: string[];
-                id?: number;
                 salarioMin?: number;
                 salarioMax?: number;
                 modalidad?: "PRESENCIAL" | "REMOTO" | "HIBRIDO";
+                id?: number;
             };
             output: {
                 success: boolean;

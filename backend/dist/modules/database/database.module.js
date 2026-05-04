@@ -20,12 +20,22 @@ exports.DatabaseModule = DatabaseModule = __decorate([
             {
                 provide: 'DATABASE_POOL',
                 useFactory: (configService) => {
+                    const dbUrl = configService.get('DATABASE_URL');
+                    if (dbUrl) {
+                        return new pg_1.Pool({
+                            connectionString: dbUrl,
+                            ssl: {
+                                rejectUnauthorized: false,
+                            },
+                        });
+                    }
                     return new pg_1.Pool({
                         host: configService.get('DB_HOST', 'localhost'),
                         port: parseInt(configService.get('DB_PORT', '5432')),
                         user: configService.get('DB_USER', 'postgres'),
                         password: configService.get('DB_PASSWORD', '123456'),
                         database: configService.get('DB_NAME', 'sistema_egresados'),
+                        ssl: configService.get('NODE_ENV') === 'production' ? { rejectUnauthorized: false } : false,
                     });
                 },
                 inject: [config_1.ConfigService],

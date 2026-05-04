@@ -16,11 +16,13 @@ const ofertas_module_1 = require("./modules/ofertas/ofertas.module");
 const dashboard_module_1 = require("./modules/dashboard/dashboard.module");
 const reportes_module_1 = require("./modules/reportes/reportes.module");
 const trpc_module_1 = require("./trpc/trpc.module");
+const app_controller_1 = require("./app.controller");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
+        controllers: [app_controller_1.AppController],
         imports: [
             config_1.ConfigModule.forRoot({ isGlobal: true }),
             database_module_1.DatabaseModule,
