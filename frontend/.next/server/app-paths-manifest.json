@@ -1,7 +1,7 @@
 {
   "/admin/page": "app/admin/page.js",
-  "/admin/empresas/page": "app/admin/empresas/page.js",
   "/admin/egresados/page": "app/admin/egresados/page.js",
+  "/admin/empresas/page": "app/admin/empresas/page.js",
   "/admin/ofertas/page": "app/admin/ofertas/page.js",
   "/admin/reportes/page": "app/admin/reportes/page.js"
 }

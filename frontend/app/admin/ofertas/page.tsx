@@ -19,6 +19,7 @@ export default function AdminOfertas() {
   const { data: ofertas, isLoading, refetch } = trpc.getOfertas.useQuery();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [ofertaToDelete, setOfertaToDelete] = React.useState<{ id: number; titulo: string } | null>(null);
+  const [selectedOferta, setSelectedOferta] = React.useState<any | null>(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   
   const deleteMutation = trpc.eliminarOferta.useMutation();
