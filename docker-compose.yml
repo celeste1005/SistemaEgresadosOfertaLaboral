@@ -1,0 +1,53 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: egresados-db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: sistema_egresados
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+  redis:
+    image: redis:7-alpine
+    container_name: egresados-cache
+    restart: always
+    ports:
+      - "6380:6379"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: egresados-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://admin:password123@db:5432/sistema_egresados
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: super_secret_key
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+      - redis
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: egresados-frontend
+    restart: always
+    environment:
+      NEXT_PUBLIC_TRPC_URL: http://localhost:4000/trpc
+    ports:
+      - "3001:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
