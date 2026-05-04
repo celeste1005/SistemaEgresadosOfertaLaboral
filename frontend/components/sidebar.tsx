@@ -32,6 +32,7 @@ const sidebarItemsByRole: Record<string, SidebarItem[]> = {
   ],
   EMPRESA: [
     { title: "Dashboard", href: "/empresa", icon: LayoutDashboard },
+    { title: "Egresados", href: "/empresa/egresados", icon: Users },
     { title: "Mis Ofertas", href: "/empresa/ofertas", icon: Briefcase },
     { title: "Publicar Oferta", href: "/empresa/ofertas/nueva", icon: PlusCircle },
   ]

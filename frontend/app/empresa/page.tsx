@@ -29,7 +29,7 @@ export default function EmpresaDashboard() {
           <p className="text-slate-500 mt-1">Gestiona tus vacantes y encuentra al mejor talento.</p>
         </div>
         <div className="flex gap-3">
-          <Link href="/admin/egresados">
+          <Link href="/empresa/egresados">
             <Button variant="outline" className="flex items-center gap-2 border-slate-200">
               <Search className="w-4 h-4 text-indigo-600" />
               Buscar Egresados

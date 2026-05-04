@@ -65,26 +65,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/empresa/ofertas/page.js"
-    ],
-    "/egresado/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/egresado/layout.js"
-    ],
-    "/egresado/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/egresado/page.js"
-    ],
-    "/egresado/ofertas/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/egresado/ofertas/page.js"
-    ],
-    "/egresado/perfil/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/egresado/perfil/page.js"
     ]
   }
 }
