@@ -13,13 +13,28 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { OfertaModal } from "@/components/OfertaModal";
 
 export default function AdminOfertas() {
   const { data: ofertas, isLoading, refetch } = trpc.getOfertas.useQuery();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [ofertaToDelete, setOfertaToDelete] = React.useState<{ id: number; titulo: string } | null>(null);
-  const [selectedOferta, setSelectedOferta] = React.useState<any | null>(null);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  
   const deleteMutation = trpc.eliminarOferta.useMutation();
+  const crearOfertaMutation = trpc.crearOferta.useMutation();
+
+  const handleCreateOferta = (data: any) => {
+    // Para ofertas internas de admin, usamos un ID genérico o el propio del admin
+    crearOfertaMutation.mutate(data, {
+      onSuccess: (res: { message: string }) => {
+        toast.success("Vacante interna publicada con éxito");
+        setIsModalOpen(false);
+        refetch();
+      },
+      onError: (err: { message: string }) => toast.error(err.message)
+    });
+  };
 
   const filteredOfertas = ofertas?.filter((o: any) => 
     o.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -44,11 +59,21 @@ export default function AdminOfertas() {
           <h1 className="text-3xl font-black text-slate-900">Gestión de Ofertas</h1>
           <p className="text-slate-500 font-medium">Monitorea y valida las vacantes publicadas por las empresas.</p>
         </div>
-        <Button className="bg-indigo-600 hover:bg-indigo-700 gap-2">
-          <PlusCircle className="w-4 h-4" />
+        <Button 
+          onClick={() => setIsModalOpen(true)}
+          className="bg-indigo-600 hover:bg-indigo-700 gap-2 h-12 px-6 rounded-2xl shadow-lg shadow-indigo-100 transition-all active:scale-95"
+        >
+          <PlusCircle className="w-5 h-5" />
           Publicar Vacante Interna
         </Button>
       </div>
+
+      <OfertaModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleCreateOferta}
+        isLoading={crearOfertaMutation.isLoading}
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="border-none shadow-sm bg-indigo-50/50">
