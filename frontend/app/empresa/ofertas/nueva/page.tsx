@@ -32,11 +32,11 @@ type OfertaFormValues = z.infer<typeof ofertaSchema>;
 export default function NuevaOferta() {
   const router = useRouter();
   const crearOferta = trpc.crearOferta.useMutation({
-    onSuccess: (data) => {
+    onSuccess: (data: { message: string }) => {
       toast.success(data.message);
       router.push('/empresa/ofertas');
     },
-    onError: (err) => {
+    onError: (err: { message: string }) => {
       toast.error(err.message);
     }
   });
@@ -55,7 +55,7 @@ export default function NuevaOferta() {
 
   const formValues = watch();
   const requisitosPreview = React.useMemo(
-    () => (formValues.requisitos ? formValues.requisitos.split(',').map((item) => item.trim()).filter(Boolean) : []),
+    () => (formValues.requisitos ? formValues.requisitos.filter(Boolean) : []),
     [formValues.requisitos]
   );
 

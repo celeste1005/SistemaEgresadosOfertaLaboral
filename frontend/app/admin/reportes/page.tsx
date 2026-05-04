@@ -147,7 +147,7 @@ export default function AdminReportes() {
               <tbody className="divide-y divide-slate-100">
                 {isLoading ? (
                   <tr><td colSpan={5} className="p-10 text-center text-slate-400">Cargando historial...</td></tr>
-                ) : reportes?.map((reporte) => (
+                ) : reportes?.map((reporte: any) => (
                   <tr key={reporte.id} className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-6 py-4 font-bold text-slate-900">{reporte.nombre}</td>
                     <td className="px-6 py-4">

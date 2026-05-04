@@ -55,12 +55,12 @@ export default function EmpresaOfertas() {
   
   const handleDelete = (id: number) => {
     deleteMutation.mutate({ id }, {
-      onSuccess: (data) => {
+      onSuccess: (data: { message: string }) => {
         toast.success(data.message);
         setOfertaToDelete(null);
         refetch();
       },
-      onError: (err) => toast.error(err.message)
+      onError: (err: { message: string }) => toast.error(err.message)
     });
   };
 
@@ -116,7 +116,7 @@ export default function EmpresaOfertas() {
       <div className="grid grid-cols-1 gap-4">
         {isLoading ? (
           <div className="text-center py-20 text-slate-400">Cargando tus vacantes...</div>
-        ) : misOfertas?.map((oferta) => (
+        ) : misOfertas?.map((oferta: any) => (
           <Card key={oferta.id} className="border-none shadow-sm hover:shadow-md transition-all group overflow-hidden">
             <CardContent className="p-0">
               <div className="flex flex-col md:flex-row">

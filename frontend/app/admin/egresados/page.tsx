@@ -26,27 +26,27 @@ export default function AdminEgresados() {
 
   const handleRegister = (data: any) => {
     registerMutation.mutate({ ...data, rol: 'EGRESADO' }, {
-      onSuccess: (res) => {
+      onSuccess: (res: { message: string }) => {
         toast.success(res.message);
         setIsModalOpen(false);
         refetch();
       },
-      onError: (err) => toast.error(err.message)
+      onError: (err: { message: string }) => toast.error(err.message)
     });
   };
 
   const handleDelete = (id: number) => {
     deleteMutation.mutate({ id }, {
-      onSuccess: (data) => {
+      onSuccess: (data: { message: string }) => {
         toast.success(data.message);
         setEgresadoToDelete(null);
         refetch();
       },
-      onError: (err) => toast.error(err.message)
+      onError: (err: { message: string }) => toast.error(err.message)
     });
   };
 
-  const filteredEgresados = egresados?.filter(e => 
+  const filteredEgresados = egresados?.filter((e: any) => 
     e.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
     e.carrera.toLowerCase().includes(searchTerm.toLowerCase()) ||
     e.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -60,7 +60,7 @@ export default function AdminEgresados() {
       title: "Listado Operacional de Egresados",
       subtitle: `Total registros: ${filteredEgresados.length}`,
       headers: ["Nombre", "Carrera", "Año Egreso", "Email", "Estado"],
-      rows: filteredEgresados.map(e => [e.nombre, e.carrera, e.anioEgreso, e.email, e.estado]),
+      rows: filteredEgresados.map((e: any) => [e.nombre, e.carrera, e.anioEgreso, e.email, e.estado]),
       suggestions: [
         "Se recomienda contactar a los egresados 'En Búsqueda' para nuevas vacantes.",
         "Actualizar base de datos de correos electrónicos trimestralmente."
@@ -141,7 +141,7 @@ export default function AdminEgresados() {
                   <tr><td colSpan={5} className="p-10 text-center text-slate-400">Cargando egresados...</td></tr>
                 ) : filteredEgresados?.length === 0 ? (
                   <tr><td colSpan={5} className="p-10 text-center text-slate-400">No hay egresados para este criterio de búsqueda.</td></tr>
-                ) : filteredEgresados?.map((egresado) => (
+                ) : filteredEgresados?.map((egresado: any) => (
                   <tr key={egresado.id} className="hover:bg-slate-50/50 transition-colors group">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">

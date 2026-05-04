@@ -206,7 +206,7 @@ export default function EgresadoDashboard() {
                     { d: 'L', a: 1 }, { d: 'M', a: 3 }, { d: 'M', a: 2 }, { d: 'J', a: 5 }, { d: 'V', a: 4 }
                   ]}>
                     <Line type="monotone" dataKey="a" stroke="#6366f1" strokeWidth={2} dot={false} />
-                    <Tooltip hide />
+                    <Tooltip />
                   </LineChart>
                 </ResponsiveContainer>
               </div>

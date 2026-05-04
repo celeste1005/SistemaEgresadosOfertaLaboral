@@ -21,19 +21,19 @@ export default function AdminOfertas() {
   const [selectedOferta, setSelectedOferta] = React.useState<any | null>(null);
   const deleteMutation = trpc.eliminarOferta.useMutation();
 
-  const filteredOfertas = ofertas?.filter(o => 
+  const filteredOfertas = ofertas?.filter((o: any) => 
     o.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
     o.empresa.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleDelete = (id: number) => {
     deleteMutation.mutate({ id }, {
-      onSuccess: (data) => {
+      onSuccess: (data: { message: string }) => {
         toast.success(data.message);
         setOfertaToDelete(null);
         refetch();
       },
-      onError: (err) => toast.error(err.message)
+      onError: (err: { message: string }) => toast.error(err.message)
     });
   };
 
@@ -118,7 +118,7 @@ export default function AdminOfertas() {
                   <tr>
                     <td colSpan={5} className="p-10 text-center text-slate-400">No hay vacantes que coincidan con la búsqueda.</td>
                   </tr>
-                ) : filteredOfertas?.map((oferta) => (
+                ) : filteredOfertas?.map((oferta: any) => (
                   <tr key={oferta.id} className="hover:bg-slate-50/50 transition-colors group">
                     <td className="px-6 py-4">
                       <div className="flex flex-col">

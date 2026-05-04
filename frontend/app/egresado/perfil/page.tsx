@@ -21,7 +21,7 @@ const profileSchema = z.object({
   direccion: z.string().min(5, "Dirección demasiado corta"),
   carrera: z.string().min(3, "Ingresa tu carrera"),
   anioEgreso: z.coerce.number().min(1950).max(currentYear),
-  habilidades: z.string().transform(val => val.split(',').map(s => s.trim())),
+  habilidades: z.string(),
   experiencia: z.string().min(10, "Cuéntanos un poco más de tu experiencia"),
   linkedin: z.string().url("URL de LinkedIn inválida").or(z.literal('')),
 });
@@ -32,7 +32,7 @@ export default function PerfilEgresado() {
   const router = useRouter();
   const utils = trpc.useContext();
   const updateProfile = trpc.updateProfile.useMutation({
-    onSuccess: async (data) => {
+    onSuccess: async (data: { message: string }) => {
       toast.success(data.message);
       // Invalidate related queries so UI updates immediately
       try {
@@ -43,7 +43,7 @@ export default function PerfilEgresado() {
       } catch {};
       router.push('/egresado');
     },
-    onError: (err) => {
+    onError: (err: { message: string }) => {
       toast.error(err.message);
     }
   });
@@ -97,7 +97,10 @@ export default function PerfilEgresado() {
   );
 
   const onSubmit = async (data: ProfileFormValues) => {
-    await updateProfile.mutateAsync(data);
+    await updateProfile.mutateAsync({
+      ...data,
+      habilidades: data.habilidades.split(',').map((skill) => skill.trim()).filter(Boolean),
+    });
   };
 
   return (

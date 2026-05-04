@@ -23,11 +23,11 @@ export default function BuscarOfertas() {
   const { data: misPostulaciones } = trpc.getMisPostulaciones.useQuery();
 
   const postularMutation = trpc.postularAOferta.useMutation({
-    onSuccess: (data) => {
+    onSuccess: (data: { message: string }) => {
       toast.success(data.message);
       utils.getMisPostulaciones.invalidate();
     },
-    onError: (err) => toast.error(err.message)
+    onError: (err: { message: string }) => toast.error(err.message)
   });
 
   const jornadaOptions = [
@@ -36,7 +36,7 @@ export default function BuscarOfertas() {
     { label: 'Híbrido', value: 'HIBRIDO' },
   ];
 
-  const filteredOfertas = ofertas?.filter(o => {
+  const filteredOfertas = ofertas?.filter((o: any) => {
     const matchesSearch = o.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
       o.empresa.toLowerCase().includes(searchTerm.toLowerCase());
 
@@ -155,7 +155,7 @@ export default function BuscarOfertas() {
                 <p className="text-sm text-slate-500">Prueba con otros términos de búsqueda.</p>
               </div>
             ) : (
-              filteredOfertas?.map((oferta) => (
+              filteredOfertas?.map((oferta: any) => (
                 <Card key={oferta.id} className="border-none shadow-sm hover:shadow-md transition-all group overflow-hidden">
                   <CardContent className="p-0">
                     <div className="flex flex-col md:flex-row">

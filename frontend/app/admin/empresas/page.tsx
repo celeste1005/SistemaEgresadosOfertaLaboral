@@ -26,23 +26,23 @@ export default function AdminEmpresas() {
 
   const handleRegister = (data: any) => {
     registerMutation.mutate({ ...data, rol: 'EMPRESA' }, {
-      onSuccess: (res) => {
+      onSuccess: (res: { message: string }) => {
         toast.success(res.message);
         setIsModalOpen(false);
         refetch();
       },
-      onError: (err) => toast.error(err.message)
+      onError: (err: { message: string }) => toast.error(err.message)
     });
   };
 
   const handleDelete = (id: number) => {
     deleteMutation.mutate({ id }, {
-      onSuccess: (data) => {
+      onSuccess: (data: { message: string }) => {
         toast.success(data.message);
         setEmpresaToDelete(null);
         refetch();
       },
-      onError: (err) => toast.error(err.message)
+      onError: (err: { message: string }) => toast.error(err.message)
     });
   };
 
@@ -55,7 +55,7 @@ export default function AdminEmpresas() {
     window.open(sitioWeb, "_blank", "noopener,noreferrer");
   };
 
-  const filteredEmpresas = empresas?.filter(e => 
+  const filteredEmpresas = empresas?.filter((e: any) => 
     e.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
     e.sector.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -124,7 +124,7 @@ export default function AdminEmpresas() {
               <div className="col-span-full p-20 text-center text-slate-400">Cargando empresas...</div>
             ) : filteredEmpresas?.length === 0 ? (
               <div className="col-span-full p-20 text-center text-slate-400">No hay empresas que coincidan con la búsqueda.</div>
-            ) : filteredEmpresas?.map((empresa) => (
+            ) : filteredEmpresas?.map((empresa: any) => (
               <div key={empresa.id} className="p-6 hover:bg-slate-50/50 transition-all group">
                 <div className="flex justify-between items-start mb-4">
                   <div className="w-12 h-12 bg-white rounded-xl border border-slate-100 flex items-center justify-center text-indigo-600 shadow-sm group-hover:shadow-md transition-all">
