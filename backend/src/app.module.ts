@@ -7,8 +7,10 @@ import { OfertasModule } from './modules/ofertas/ofertas.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { ReportesModule } from './modules/reportes/reportes.module';
 import { TrpcModule } from './trpc/trpc.module';
+import { AppController } from './app.controller';
 
 @Module({
+  controllers: [AppController],
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
