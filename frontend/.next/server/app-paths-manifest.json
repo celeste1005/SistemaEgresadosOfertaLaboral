@@ -2,6 +2,6 @@
   "/login/page": "app/login/page.js",
   "/empresa/ofertas/page": "app/empresa/ofertas/page.js",
   "/egresado/page": "app/egresado/page.js",
-  "/egresado/ofertas/page": "app/egresado/ofertas/page.js",
-  "/egresado/perfil/page": "app/egresado/perfil/page.js"
+  "/egresado/perfil/page": "app/egresado/perfil/page.js",
+  "/egresado/ofertas/page": "app/egresado/ofertas/page.js"
 }
